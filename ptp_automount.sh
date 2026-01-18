@@ -11,10 +11,8 @@ fi
 
 case "$1" in
 	'attach')
-		if ! [ -d "$MOUNT_POINT" ]; then
-			if ! mkdir -p "$MOUNT_POINT"; then exit 1; fi
-		fi
-		if mount | grep -q "gphotofs on ${MOUNT_POINT}"; then exit 1; fi
+		mkdir -p "$MOUNT_POINT" || exit 1
+		mount | grep -q "gphotofs on ${MOUNT_POINT}" || exit 1
 		gphotofs $MOUNT_OPTIONS "$MOUNT_POINT"
 		;;
 	'detach')
